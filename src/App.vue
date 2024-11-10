@@ -3,9 +3,10 @@ import HeaderNav from '@/components/HeaderNav.vue'
 import HistorySection from '@/components/HistorySection.vue'
 import GalleryView from '@/components/GalleryView.vue'
 import AudioPlayer from '@/components/AudioPlayer.vue'
+import LyricsSection from '@/components/LyricsSection.vue'
+import VideoSection from '@/components/VideoSection.vue'
 import { OhVueIcon, addIcons } from 'oh-vue-icons'
 import { FaAnchor } from 'oh-vue-icons/icons/fa'
-import LyricsSection from '@/components/LyricsSection.vue'
 
 addIcons(FaAnchor)
 </script>
@@ -23,6 +24,7 @@ addIcons(FaAnchor)
       <HistorySection />
       <GalleryView />
       <LyricsSection />
+      <VideoSection />
     </main>
     <AudioPlayer />
   </div>
