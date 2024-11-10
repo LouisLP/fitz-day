@@ -42,6 +42,6 @@ The site is automatically deployed to GitHub Pages via GitHub Actions when chang
 
 ## Credits 🙏
 
-🎸 Song: "The Wreck of the Edmund Fitzgerald" by Gordon Lightfoot
-📚 Historical information sourced from various Great Lakes maritime archives
-💫 Built in remembrance of the 29 crew members lost on November 10, 1975
+- 🎸 Song: "The Wreck of the Edmund Fitzgerald" by Gordon Lightfoot
+- 📚 Historical information sourced from various Great Lakes maritime archives
+- 💫 Built in remembrance of the 29 crew members lost on November 10, 1975
