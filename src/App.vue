@@ -5,6 +5,7 @@ import GalleryView from '@/components/GalleryView.vue'
 import AudioPlayer from '@/components/AudioPlayer.vue'
 import { OhVueIcon, addIcons } from 'oh-vue-icons'
 import { FaAnchor } from 'oh-vue-icons/icons/fa'
+import LyricsSection from '@/components/LyricsSection.vue'
 
 addIcons(FaAnchor)
 </script>
@@ -15,12 +16,13 @@ addIcons(FaAnchor)
     <main class="container mx-auto px-4 py-8 space-y-8">
       <h1 class="text-4xl font-bold text-lighthouse-yellow">
         <div class="flex items-center gap-2">
-          <OhVueIcon name="fa-anchor" scale="2" />
           <span>The Wreck of the Edmund Fitzgerald</span>
+          <OhVueIcon name="fa-anchor" scale="2" />
         </div>
       </h1>
       <HistorySection />
       <GalleryView />
+      <LyricsSection />
     </main>
     <AudioPlayer />
   </div>
