@@ -1,15 +1,15 @@
 <script setup lang="ts">
 const images = [
   {
-    url: 'https://placeholder-url/edmund-fitzgerald-1.jpg',
+    url: '/fitz-day/assets/images/fitz-1.jpg',
     caption: 'The SS Edmund Fitzgerald in better days'
   },
   {
-    url: 'https://placeholder-url/edmund-fitzgerald-2.jpg',
-    caption: 'Loading iron ore at the Superior dock'
+    url: '/fitz-day/assets/images/fitz-1.jpg',
+    caption: 'Lake Superior'
   },
   {
-    url: 'https://placeholder-url/edmund-fitzgerald-3.jpg',
+    url: '/fitz-day/assets/images/fitz-3.jpg',
     caption: 'Memorial at Whitefish Point'
   }
 ]
