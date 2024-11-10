@@ -6,7 +6,6 @@ const isPlaying = ref(false)
 const isLoading = ref(false)
 const error = ref('')
 
-// Load audio on first interaction
 const handlePlay = async () => {
   if (!audioPlayer.value) return
 
@@ -18,7 +17,6 @@ const handlePlay = async () => {
       audioPlayer.value.pause()
       isPlaying.value = false
     } else {
-      // This is important for mobile - we need to load and play in response to a user gesture
       if (audioPlayer.value.readyState === 0) {
         await audioPlayer.value.load()
       }
@@ -26,7 +24,7 @@ const handlePlay = async () => {
       isPlaying.value = true
     }
   } catch (err) {
-    error.value = 'Playback failed. Please try again.'
+    error.value = `Playback failed: ${err instanceof Error ? err.message : 'Unknown error'}`
     console.error('Audio playback error:', err)
   } finally {
     isLoading.value = false
@@ -143,7 +141,7 @@ onBeforeUnmount(() => {
       @pause="handlePause"
       @play="handlePlay"
     >
-      <source src="/assets/wreck-of-the-edmund-fitzgerald.mp3" type="audio/mpeg" />
+      <source src="/fitz-day/assets/wreck-of-the-edmund-fitzgerald.mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
   </div>
