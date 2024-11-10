@@ -2,6 +2,7 @@
 import HeaderNav from '@/components/HeaderNav.vue'
 import HistorySection from '@/components/HistorySection.vue'
 import GalleryView from '@/components/GalleryView.vue'
+import AudioPlayer from '@/components/AudioPlayer.vue'
 </script>
 
 <template>
@@ -14,5 +15,6 @@ import GalleryView from '@/components/GalleryView.vue'
       <HistorySection />
       <GalleryView />
     </main>
+    <AudioPlayer />
   </div>
 </template>
