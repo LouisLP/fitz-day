@@ -1,5 +1,9 @@
+<script lang="ts" setup>
+import TimelineEvent from '@/components/TimelineEvent.vue'
+</script>
+
 <template>
-  <section id="history" class="mb-12">
+  <section id="history">
     <h2 class="text-3xl font-bold text-wave-blue mb-6">The Story</h2>
     <div class="space-y-6">
       <p class="text-lg">
