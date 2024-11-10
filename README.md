@@ -1,5 +1,47 @@
-# Vue 3 + TypeScript + Vite
+# Fitz Day
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A memorial website dedicated to the SS Edmund Fitzgerald and her crew, who were lost on Lake Superior on November 10, 1975.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## About
+
+This interactive web experience commemorates the Edmund Fitzgerald through:
+
+- Historical timeline of the fateful voyage
+- Photo gallery of the ship and related locations
+- Complete lyrics to Gordon Lightfoot's famous song
+- Memorial video content
+- Background music player featuring "The Wreck of the Edmund Fitzgerald"
+
+## Technology
+
+Built with:
+
+- Vue 3 + TypeScript
+- Vite
+- Tailwind CSS
+- OH Vue Icons
+
+## Development
+
+To run locally:
+
+```sh
+npm install
+npm run dev
+```
+
+To build for production:
+
+```sh
+npm run build
+```
+
+## Deployment
+
+The site is automatically deployed to GitHub Pages via GitHub Actions when changes are pushed to the main branch.
+
+## Credits
+
+- Song: "The Wreck of the Edmund Fitzgerald" by Gordon Lightfoot
+- Historical information sourced from various Great Lakes maritime archives
+- Built in remembrance of the 29 crew members lost on November 10, 1975
