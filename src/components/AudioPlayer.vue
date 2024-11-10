@@ -1,27 +1,71 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 
 const audioPlayer = ref<HTMLAudioElement | null>(null)
 const isPlaying = ref(false)
+const isLoading = ref(false)
+const error = ref('')
 
-const togglePlay = () => {
+// Load audio on first interaction
+const handlePlay = async () => {
   if (!audioPlayer.value) return
 
-  if (isPlaying.value) {
-    audioPlayer.value.pause()
-  } else {
-    audioPlayer.value.play()
+  try {
+    isLoading.value = true
+    error.value = ''
+
+    if (isPlaying.value) {
+      audioPlayer.value.pause()
+      isPlaying.value = false
+    } else {
+      // This is important for mobile - we need to load and play in response to a user gesture
+      if (audioPlayer.value.readyState === 0) {
+        await audioPlayer.value.load()
+      }
+      await audioPlayer.value.play()
+      isPlaying.value = true
+    }
+  } catch (err) {
+    error.value = 'Playback failed. Please try again.'
+    console.error('Audio playback error:', err)
+  } finally {
+    isLoading.value = false
   }
-  isPlaying.value = !isPlaying.value
 }
 
-// Add event listener to update isPlaying state when audio ends
-onMounted(() => {
-  if (!audioPlayer.value) return
+const handleCanPlay = () => {
+  isLoading.value = false
+}
 
-  audioPlayer.value.addEventListener('ended', () => {
+const handleError = (e: Event) => {
+  const target = e.target as HTMLAudioElement
+  isLoading.value = false
+  isPlaying.value = false
+  error.value = `Audio error: ${target.error?.message || 'Unknown error'}`
+}
+
+const handleEnded = () => {
+  isPlaying.value = false
+}
+
+const handlePause = () => {
+  isPlaying.value = false
+}
+
+// Handle page visibility changes
+const handleVisibilityChange = () => {
+  if (document.hidden && audioPlayer.value && isPlaying.value) {
+    audioPlayer.value.pause()
     isPlaying.value = false
-  })
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('visibilitychange', handleVisibilityChange)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('visibilitychange', handleVisibilityChange)
 })
 </script>
 
@@ -29,11 +73,36 @@ onMounted(() => {
   <div class="fixed bottom-4 right-4 bg-storm-gray rounded-lg p-4 shadow-lg z-50">
     <div class="flex items-center gap-4">
       <button
-        @click="togglePlay"
+        @click="handlePlay"
         class="bg-lighthouse-yellow hover:bg-wave-blue transition-colors text-nautical-blue p-2 rounded-full"
+        :disabled="isLoading"
       >
         <span class="sr-only">{{ isPlaying ? 'Pause' : 'Play' }} background music</span>
+        <!-- Loading spinner -->
         <svg
+          v-if="isLoading"
+          class="animate-spin h-6 w-6"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          />
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          />
+        </svg>
+        <!-- Play/Pause icon -->
+        <svg
+          v-else
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="none"
@@ -59,13 +128,23 @@ onMounted(() => {
       <div class="text-sm">
         <div class="font-bold">The Wreck of the Edmund Fitzgerald</div>
         <div class="text-gray-300">Gordon Lightfoot</div>
+        <div v-if="error" class="text-red-500 text-xs mt-1">
+          {{ error }}
+        </div>
       </div>
     </div>
     <audio
       ref="audioPlayer"
-      src="/assets/wreck-of-the-edmund-fitzgerald.mp3"
-      preload="metadata"
+      preload="none"
       loop
-    />
+      @canplay="handleCanPlay"
+      @error="handleError"
+      @ended="handleEnded"
+      @pause="handlePause"
+      @play="handlePlay"
+    >
+      <source src="/assets/wreck-of-the-edmund-fitzgerald.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
   </div>
 </template>
