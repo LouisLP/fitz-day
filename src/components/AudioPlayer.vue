@@ -1,31 +1,53 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 
+// interface AudioError {
+//   message: string
+//   code?: number
+// }
+
 const audioPlayer = ref<HTMLAudioElement | null>(null)
 const isPlaying = ref(false)
 const isLoading = ref(false)
-const error = ref('')
+const error = ref<string>('')
+const audioLoaded = ref(false)
+
+const initAudio = async () => {
+  if (!audioPlayer.value) return
+  try {
+    isLoading.value = true
+    await audioPlayer.value.load()
+    audioLoaded.value = true
+  } catch (err) {
+    console.error('Audio initialization error:', err)
+  } finally {
+    isLoading.value = false
+  }
+}
 
 const handlePlay = async () => {
   if (!audioPlayer.value) return
 
   try {
-    isLoading.value = true
-    error.value = ''
-
     if (isPlaying.value) {
       audioPlayer.value.pause()
       isPlaying.value = false
-    } else {
-      if (audioPlayer.value.readyState === 0) {
-        await audioPlayer.value.load()
-      }
-      await audioPlayer.value.play()
-      isPlaying.value = true
+      return
     }
+
+    isLoading.value = true
+    error.value = ''
+
+    if (!audioLoaded.value) {
+      await initAudio()
+    }
+
+    await audioPlayer.value.play()
+    isPlaying.value = true
   } catch (err) {
     error.value = `Playback failed: ${err instanceof Error ? err.message : 'Unknown error'}`
     console.error('Audio playback error:', err)
+    isPlaying.value = false
   } finally {
     isLoading.value = false
   }
@@ -33,12 +55,14 @@ const handlePlay = async () => {
 
 const handleCanPlay = () => {
   isLoading.value = false
+  audioLoaded.value = true
 }
 
 const handleError = (e: Event) => {
   const target = e.target as HTMLAudioElement
   isLoading.value = false
   isPlaying.value = false
+  audioLoaded.value = false
   error.value = `Audio error: ${target.error?.message || 'Unknown error'}`
 }
 
@@ -60,9 +84,14 @@ const handleVisibilityChange = () => {
 
 onMounted(() => {
   document.addEventListener('visibilitychange', handleVisibilityChange)
+  initAudio()
 })
 
 onBeforeUnmount(() => {
+  if (audioPlayer.value) {
+    audioPlayer.value.pause()
+    audioPlayer.value.src = ''
+  }
   document.removeEventListener('visibilitychange', handleVisibilityChange)
 })
 </script>
@@ -133,13 +162,12 @@ onBeforeUnmount(() => {
     </div>
     <audio
       ref="audioPlayer"
-      preload="none"
+      preload="metadata"
       loop
       @canplay="handleCanPlay"
       @error="handleError"
       @ended="handleEnded"
       @pause="handlePause"
-      @play="handlePlay"
     >
       <source src="/fitz-day/assets/wreck-of-the-edmund-fitzgerald.mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
