@@ -98,18 +98,20 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="fixed bottom-4 right-4 bg-storm-gray rounded-lg p-4 shadow-lg z-50">
-    <div class="flex items-center gap-4">
+  <div
+    class="fixed bottom-4 mx-auto left-0 right-0 max-w-[90%] sm:max-w-xs sm:right-4 sm:left-auto bg-storm-gray rounded-lg p-3 shadow-lg z-50"
+  >
+    <div class="flex items-center gap-3">
       <button
         @click="handlePlay"
-        class="bg-lighthouse-yellow hover:bg-wave-blue transition-colors text-nautical-blue p-2 rounded-full"
+        class="bg-lighthouse-yellow hover:bg-wave-blue transition-colors text-nautical-blue p-1.5 rounded-full flex-shrink-0"
         :disabled="isLoading"
       >
         <span class="sr-only">{{ isPlaying ? 'Pause' : 'Play' }} background music</span>
         <!-- Loading spinner -->
         <svg
           v-if="isLoading"
-          class="animate-spin h-6 w-6"
+          class="animate-spin h-5 w-5"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -135,7 +137,7 @@ onBeforeUnmount(() => {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          class="w-6 h-6"
+          class="w-5 h-5"
         >
           <path
             v-if="isPlaying"
@@ -153,10 +155,10 @@ onBeforeUnmount(() => {
           />
         </svg>
       </button>
-      <div class="text-sm">
-        <div class="font-bold">The Wreck of the Edmund Fitzgerald</div>
-        <div class="text-gray-300">Gordon Lightfoot</div>
-        <div v-if="error" class="text-red-500 text-xs mt-1">
+      <div class="text-xs sm:text-sm min-w-0">
+        <div class="font-bold truncate">The Wreck of the Edmund Fitzgerald</div>
+        <div class="text-gray-300 truncate">Gordon Lightfoot</div>
+        <div v-if="error" class="text-red-500 text-xs mt-1 truncate">
           {{ error }}
         </div>
       </div>
