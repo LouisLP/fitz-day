@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import audioUrl from '/assets/wreck-of-the-edmund-fitzgerald.mp3'
 
 // interface AudioError {
 //   message: string
@@ -169,7 +170,7 @@ onBeforeUnmount(() => {
       @ended="handleEnded"
       @pause="handlePause"
     >
-      <source src="/fitz-day/assets/wreck-of-the-edmund-fitzgerald.mp3" type="audio/mpeg" />
+      <source :src="audioUrl" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
   </div>
