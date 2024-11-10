@@ -5,7 +5,7 @@ const images = [
     caption: 'The SS Edmund Fitzgerald in better days'
   },
   {
-    url: '/fitz-day/assets/images/fitz-1.jpg',
+    url: '/fitz-day/assets/images/fitz-2.jpg',
     caption: 'Lake Superior'
   },
   {
