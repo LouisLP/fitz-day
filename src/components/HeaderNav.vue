@@ -5,6 +5,8 @@
       <div class="flex space-x-4">
         <a href="#history" class="hover:text-lighthouse-yellow transition-colors">History</a>
         <a href="#gallery" class="hover:text-lighthouse-yellow transition-colors">Gallery</a>
+        <a href="#lyrics" class="hover:text-lighthouse-yellow transition-colors">Lyrics</a>
+        <a href="#video" class="hover:text-lighthouse-yellow transition-colors">Videos</a>
       </div>
     </div>
   </nav>
